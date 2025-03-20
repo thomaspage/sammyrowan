@@ -251,7 +251,7 @@ const Home = ({}) => {
             },
           }}
         >
-          <Paper style={{ padding: 20, width: 700, maxWidth: "100%" }}>
+          <Paper style={{ padding: 20, width: 700, maxWidth: "100%", maxHeight: "100vh", overflowY: "auto" }}>
             <form onSubmit={handleSubmit}>
               <FormControl sx={{ width: "100%" }} disabled={loading}>
                 <GuestsContainer>
