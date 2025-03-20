@@ -21,38 +21,10 @@ a {
 @import url('https://fonts.googleapis.com/css?family=DM+Serif+Display&display=swap'); */
 
 @font-face {
-  font-family: "PPHatton";
-  font-weight: 700;
-  src: url("fonts/PPHatton-Bold.woff") format('woff');
+  font-family: "Lazy Dog";
+  src: url("fonts/Lazydog.otf") format('opentype');
 }
-@font-face {
-  font-family: "PPHatton";
-  font-style: italic;
-  font-weight: 700;
-  src: url("fonts/PPHatton-BoldItalic.woff") format('woff');
-}
-@font-face {
-  font-family: "PPHatton";
-  font-weight: 500;
-  src: url("fonts/PPHatton-Medium.woff") format('woff');
-}
-@font-face {
-  font-family: "PPHatton";
-  font-style: italic;
-  font-weight: 500; 
-  src: url("fonts/PPHatton-MediumItalic.woff") format('woff');
-}
-@font-face {
-  font-family: "PPHatton";
-  font-weight: 200;
-  src: url("fonts/PPHatton-Ultralight.woff") format('woff');
-}
-@font-face {
-  font-family: "PPHatton";
-  font-style: italic;
-  font-weight: 200;
-  src: url("fonts/PPHatton-UltralightItalic.woff") format('woff');
-}
+
 
 @font-face {
   font-family: "Ballantines";
@@ -60,16 +32,3 @@ a {
 }
 
 
-
-@font-face {
-  font-family: "Cooper";
-  font-weight: 300;
-  src: url("fonts/cooperl.ttf") format('truetype');
-}
-
-
-@font-face {
-  font-family: "Cooper";
-  font-weight: 500;
-  src: url("fonts/cooperm.ttf") format('truetype');
-}

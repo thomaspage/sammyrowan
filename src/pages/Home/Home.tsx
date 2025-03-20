@@ -1,10 +1,17 @@
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import {
   ScheduleContainer,
   HomeContainer,
   Place,
   Time,
   Title,
+  LoversImg,
+  SubTitle,
+  FarmImg,
+  TitleImg,
+  ArrowImg,
+  RsvpButton,
+  ScheduleImg,
 } from "./Home.styles";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
@@ -12,49 +19,66 @@ import { useEffect } from "react";
 const Home = ({}) => {
   const { t } = useTranslation();
 
-  useEffect(() => {
-    
-    fetch("https://gamification.prv-use1.dev-pure.cloud/api/v2/insights/performance-summary?endWorkday=2024-02-01&startWorkday=2024-01-01&userIds=c4a4c399-c581-4f9c-bf4a-8dfdb1d527d4", {
-        "cache": "default",
-      "credentials": "omit",
-      "headers": {
-          "Accept": "application/json",
-          "ININ-Organization-Id": "945b2624-2611-4fdc-b86e-f2160be7b767",
-      },
-      "method": "GET",
-      // "mode": "cors",
-      "redirect": "follow",
-  })
-  }, []);
-
   return (
     <HomeContainer>
-      <Title variant="h1">
-        Max & Tom
-        <br />
-        {t("pages.home.title.2")}
-        <br />
-        {t("pages.home.title.3")}
-        <br />
-        {t("pages.home.title.4")}
-      </Title>
+      <LoversImg />
 
-      <ScheduleContainer>
-        <Time>
-          <Typography variant="h3">{t("pages.home.day")}</Typography>
-          <Typography variant="h3">{t("pages.home.date")}</Typography>
-          <Typography variant="h3">{t("pages.home.time")}</Typography>
-        </Time>
-        <Place>
-          <Typography variant="h3">{t("pages.home.place")}</Typography>
-          <Typography variant="h3">{t("pages.home.address")}</Typography>
-          <Typography variant="h3">{t("pages.home.city")}</Typography>
-        </Place>
-      </ScheduleContainer>
+      <TitleImg />
 
-      <Typography fontFamily="Ballantines" variant="h4">
-        {t("pages.home.dancing")}
+      <Typography style={{ marginBottom: 24 }} variant="body2">
+        Scroll to RSVP!
       </Typography>
+
+      <ArrowImg />
+
+      <div id="details" style={{ textAlign: "center" }}>
+        <FarmImg style={{ marginBottom: 24 }} />
+
+        <Typography variant="body2" style={{ marginBottom: 24 }}>
+          Our wedding will be held at
+          <br />
+          Grammy + Grampy’s Farm
+        </Typography>
+
+        <a
+          href="https://maps.app.goo.gl/gJMAMtnQL2Ex87H78"
+          target="_blank"
+          style={{ color: "inherit" }}
+        >
+          <Typography variant="body1" style={{ marginBottom: 24 }}>
+            2037 RUE Duvernay,
+            <br />
+            Sherbrooke QC J1H 0A6
+          </Typography>
+        </a>
+
+        <Typography variant="body1" style={{ marginBottom: 24 }}>
+          September 06, 2025
+          <br />
+          at 4:30 pm
+        </Typography>
+      </div>
+
+      <div id="rsvp">
+        <RsvpButton variant="outlined">
+          <Typography style={{fontSize: 40}}>RSVP</Typography>
+        </RsvpButton>
+      </div>
+
+      <div id="schedule" style={{ textAlign: "center", paddingTop: 75 }}>
+        <Typography variant="body2" style={{ marginBottom: 48 }}>Schedule</Typography>
+        <ScheduleImg />
+      </div>
+
+      <div id="accomodations" style={{ textAlign: "center", paddingTop: 75, paddingBottom: 500 }}>
+        <Typography variant="body2" style={{ marginBottom: 24 }}>Accomodations</Typography>
+        <Typography variant="body1" style={{ marginBottom: 24 }}>
+          We have not reserved a block of rooms,<br /> so feel free to stay wherever you'd like!
+        </Typography>
+        <Typography variant="body1">
+          Here are some nearby suggestions:
+        </Typography>
+      </div>
     </HomeContainer>
   );
 };

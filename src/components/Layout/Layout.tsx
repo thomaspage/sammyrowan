@@ -6,24 +6,25 @@ import Content from "../Content";
 import LanguageSelector from "../LanguageSelector";
 import Menu from "../Menu";
 import { LayoutContainer, Title } from "./Layout.styles";
+import Home from "../../pages/Home";
 
-const Layout = ({}) => {
-  const { pathname } = useLocation();
+const Layout = ({children}: {children: React.ReactNode}) => {
+  // const { pathname } = useLocation();
 
   const {
     t,
     i18n: { language },
   } = useTranslation();
 
-  const title = {
-    "/accomodations": t("pages.accomodations.path"),
-    "/schedule": t("pages.schedule.path"),
-    "/rsvp": t("pages.rsvp.path"),
-  }[pathname];
+  // const title = {
+  //   "/accomodations": t("pages.accomodations.path"),
+  //   "/schedule": t("pages.schedule.path"),
+  //   "/rsvp": t("pages.rsvp.path"),
+  // }[pathname];
 
-  useEffect(() => {
-    amplitude.track("Page View", { pathname, language });
-  }, [pathname]);
+  // useEffect(() => {
+  //   amplitude.track("Page View", { pathname, language });
+  // }, [pathname]);
 
   return (
     <LayoutContainer>
@@ -31,17 +32,10 @@ const Layout = ({}) => {
       <Menu />
 
       {/* Content */}
-      <Content>
-        <>
-          <Title sx={{ textAlign: pathname === "/schedule" ? "center" : "" }}>
-            {title}
-          </Title>
-          <Outlet />
-        </>
-      </Content>
+      <Home />
 
       {/* Lanugage Selector */}
-      <LanguageSelector />
+      {/* <LanguageSelector /> */}
     </LayoutContainer>
   );
 };

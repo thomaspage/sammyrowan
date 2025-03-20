@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme, Theme } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -15,48 +15,76 @@ import RSVP from "./pages/RSVP";
 import Registry from "./pages/Registry";
 import Schedule from "./pages/Schedule";
 import SecretDinner from "./pages/SecretDinner";
+import CssBaseline from '@mui/material/CssBaseline';
 
 export const GOOGLE_SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbxgzAIEWC2Ijq3_ot56bgIWB7QEBh0mTY0xW1BLUbMtZS6WCm-F7tLbfQ0wYBoC5JLs9A/exec";
 
-export const theme = {
+export const theme = createTheme({
   palette: {
-    primary: { main: "#4cb9a3" },
+    background: {
+      default: "#fbc7bd",
+      paper: "#fbc7bd",
+    },
+    primary: { main: "#ff2103" },
+    text: {
+      primary: "#ff2103",
+      secondary: "#FF503E",
+      disabled: "#ff675f",
+    }
   },
   typography: {
     h1: {
       fontSize: "2rem",
       fontWeight: 500,
+      textTransform: "uppercase",
     },
     h2: {
       fontSize: "1.4rem",
       fontWeight: 500,
-      lineHeight: "1.5em",
+      textTransform: "uppercase",
+      // lineHeight: "1.5em",
     },
     h3: {
       fontSize: "1.05rem",
       fontWeight: 500,
-      lineHeight: "1.5em",
+      textTransform: "uppercase",
+      // lineHeight: "1.5em",
     },
     h4: {
       fontFamily: "Ballantines",
     },
     body1: {
-      fontSize: "1rem",
-      fontWeight: 200,
+      fontSize: 24,
+      textTransform: "uppercase",
     },
     body2: {
-      fontSize: "0.8rem",
-      fontWeight: 200,
+      fontSize: 20,
+      textTransform: "uppercase",
     },
-    fontFamily: ["PPHatton", "serif"].join(","),
+    fontFamily: ["Lazy Dog", "sans-serif"].join(","),
   },
-};
+});
+
+theme.typography.body1 = {
+  ...theme.typography.body1,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 20,
+  },
+}
+
+theme.typography.body2 = {
+  ...theme.typography.body2,
+  color: theme.palette.text.secondary,
+  [theme.breakpoints.down("md")]: {
+    fontSize: 16,
+  },
+}
 
 const Redirect = ({ href }: { href: string }) => {
   var elemDiv = document.createElement("div");
   elemDiv.style.cssText =
-    "top:0;left:0;right:0;bottom:0;z-index:100000000;background-color:white;position:fixed;";
+    "top:0;left:0;right:0;bottom:0;z-index:100000000;background-color:#fbc7bd;position:fixed;";
   document.body.appendChild(elemDiv);
 
   window.location.replace(href);
@@ -75,8 +103,12 @@ function App() {
   }, [i18n]);
 
   return (
-    <ThemeProvider theme={createTheme(theme)}>
-      <Router>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Layout>
+        <Home />
+      </Layout>
+      {/* <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
@@ -90,13 +122,13 @@ function App() {
               element={
                 <Redirect href="https://beauvideophotop.pic-time.com/-thomasmaxime/gallery" />
               }
-            />
+            /> */}
 
             {/* Redirect to home */}
-            <Route path="*" element={<Navigate to="/" replace />} />
+            {/* <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>
-      </Router>
+      </Router> */}
     </ThemeProvider>
   );
 }

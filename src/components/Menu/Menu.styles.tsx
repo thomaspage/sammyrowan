@@ -31,18 +31,22 @@ export const List = styled("div")<{ open: boolean }>(({ theme, open }) => ({
   bottom: 0,
   display: "flex",
   flexDirection: "column",
-  justifyContent: "center",
-  backgroundColor: "white",
+  justifyContent: "flex-start",
+  backgroundColor: "#fbc7bd",
   alignItems: "flex-start",
+  paddingLeft: 50,
+  paddingTop: 200,
 
   transition: "opacity 0.5s",
+
+  userSelect: "none",
 
   [theme.breakpoints.down("md")]: {
     left: 0,
     right: 0,
     opacity: 0,
     pointerEvents: "none",
-    padding: 50,
+    paddingTop: 200,
 
     ...(open && {
       pointerEvents: "auto",
@@ -54,8 +58,8 @@ export const List = styled("div")<{ open: boolean }>(({ theme, open }) => ({
   },
 }));
 
-export const ListItem = styled(NavLink)(({}) => ({
-  padding: "5px 5px 5px 2px",
+export const ListItem = styled('a')(({theme}) => ({
+  // padding: "5px 5px 5px 2px",
   textDecoration: "none",
   position: "relative",
   margin: "2px 0",
@@ -66,6 +70,7 @@ export const Hamburger = styled(Button)(
   pointer-events: auto;
   z-index: 1;
   min-width: 0px;
+  position: fixed;
 
   ${theme.breakpoints.up("md")} {
     display: none;
@@ -94,7 +99,7 @@ export const Patty = styled("div")<{ open?: boolean, duration?: number }>(
   flex-shrink: 0;
   margin: 2px 0;
   width: 20px;
-  background-color: black;
+  background-color: ${theme.palette.text.primary};
   border-radius: 5px;
 
   transition: margin ${duration}s ${duration}s, rotate ${duration}s, opacity 0s ${duration}s;
@@ -125,33 +130,51 @@ export const Patty = styled("div")<{ open?: boolean, duration?: number }>(
 );
 
 export const ListType = styled2(Typography).attrs({
-  variant: "h2",
+  variant: "body2",
 })<{ selected: boolean }>(({ theme, selected }) => ({
   display: "inline-block",
   // borderBottomWidth: 1,
   // borderBottomStyle: "solid",
   // borderBottomColor: "transparent",
 
-  color: "black",
-  padding: "0px 12px 2px 2px",
+  // color: theme.palette.text.primary,
+  padding: "2px 12px 2px 2px",
 
-  "&::after": {
-    content: '""',
-    display: "block",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    height: 1,
-    transition: "opacity 0.3s",
-    backgroundColor: "black",
-    width: 0,
-    opacity: 0,
 
-    ...(selected && {
+  ...(selected && {
+    color: theme.palette.text.primary,
+    // underline
+
+    "&::after": {
+      content: '""',
+      display: "block",
+      position: "absolute",
+      bottom: 7,
+      left: 0,
+      height: 2,
       width: "100%",
-      opacity: 1,
-    }),
-  },
+      backgroundColor: theme.palette.text.disabled,
+      borderRadius: 1000,
+    }
+  }),
+
+  // "&::after": {
+  //   content: '""',
+  //   display: "block",
+  //   position: "absolute",
+  //   bottom: 0,
+  //   left: 0,
+  //   height: 1,
+  //   transition: "opacity 0.3s",
+  //   backgroundColor: theme.palette.text.primary,
+  //   width: 0,
+  //   opacity: 0,
+
+  //   ...(selected && {
+  //     width: "100%",
+  //     opacity: 1,
+  //   }),
+  // },
 }));
 
 export const Hearts = styled2("img")<{
@@ -167,4 +190,18 @@ export const Hearts = styled2("img")<{
   left: $left !== undefined ? $left : "unset",
   right: $right !== undefined ? $right : "unset",
   height: $height !== undefined ? $height : "unset",
+}));
+
+export const HeartImg = styled2("img").attrs({
+  src: `${process.env.PUBLIC_URL}/img/heart.png`,
+})(({ theme }) => ({
+  position: "fixed",
+  top: 20,
+  left: 20, 
+  zIndex: 1,
+  width: 50,
+
+  [theme.breakpoints.down("md")]: {
+    display: "none",
+  },
 }));
