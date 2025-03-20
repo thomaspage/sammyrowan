@@ -201,3 +201,40 @@ export const ScheduleImg = styled("img").attrs({
 
 
 }));
+
+export const DividerImg = styled("img").attrs({
+  src: `${process.env.PUBLIC_URL}/img/divider.png`,
+})(({theme}) => ({
+  width: 50,
+  margin: 24
+}));
+
+
+export const CarImg = styled("img").attrs({
+  src: `${process.env.PUBLIC_URL}/img/car.png`,
+})(({theme}) => ({
+  width: 50,
+
+}));
+
+export const SoonImg = styled("img").attrs({
+  src: `${process.env.PUBLIC_URL}/img/soon.png`,
+})(({theme}) => ({
+  width: 550,
+  maxWidth: "100%",
+  margin: "auto",
+  marginBottom: 24,
+  // marginBottom: -120,
+
+
+
+  [theme.breakpoints.down("md")]: {
+    width: 500,
+    // marginBottom: -90,
+  },
+
+  [theme.breakpoints.down("sm")]: {
+    width: 300,
+    // marginBottom: -60,
+  },
+}));
