@@ -8,16 +8,14 @@ export const MenuContainer = styled("div")<{ open: boolean }>(
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
-    width: 225,
     zIndex: 1,
+    position: "fixed",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
 
     [theme.breakpoints.down("md")]: {
-      position: "absolute",
-      ...(open && {
-        position: "fixed",
-      }),
-      top: 15,
-      left: 15,
       pointerEvents: "none",
     },
   })
@@ -26,16 +24,14 @@ export const MenuContainer = styled("div")<{ open: boolean }>(
 export const List = styled("div")<{ open: boolean }>(({ theme, open }) => ({
   flexGrow: 1,
 
-  position: "fixed",
   top: 0,
   bottom: 0,
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-start",
-  backgroundColor: "#fbc7bd",
   alignItems: "flex-start",
-  paddingLeft: 50,
-  paddingTop: 200,
+  paddingLeft: 25,
+  paddingTop: 250,
 
   transition: "opacity 0.5s",
 
@@ -46,7 +42,9 @@ export const List = styled("div")<{ open: boolean }>(({ theme, open }) => ({
     right: 0,
     opacity: 0,
     pointerEvents: "none",
-    paddingTop: 200,
+    paddingLeft: 50,
+    backgroundColor: "#fbc7bd",
+    width: "100%",
 
     ...(open && {
       pointerEvents: "auto",
@@ -62,7 +60,7 @@ export const ListItem = styled('a')(({theme}) => ({
   // padding: "5px 5px 5px 2px",
   textDecoration: "none",
   position: "relative",
-  margin: "2px 0",
+  margin: "5px 0",
 }));
 
 export const Hamburger = styled(Button)(
@@ -71,6 +69,8 @@ export const Hamburger = styled(Button)(
   z-index: 1;
   min-width: 0px;
   position: fixed;
+  top: 15px;
+  left: 15px;
 
   ${theme.breakpoints.up("md")} {
     display: none;

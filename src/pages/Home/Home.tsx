@@ -48,6 +48,7 @@ interface Guest {
   firstName: string;
   lastName: string;
   dietaryRestrictions: string;
+  songRequest: string;
   notes: string;
 }
 
@@ -55,6 +56,7 @@ const emptyGuest: Guest = {
   firstName: "",
   lastName: "",
   dietaryRestrictions: "",
+  songRequest: "",
   notes: "",
 };
 const Home = ({}) => {
@@ -169,15 +171,13 @@ const Home = ({}) => {
         >
           <Typography style={{ fontSize: 40 }}>RSVP</Typography>
         </RsvpButton>
-        {completed && (
           <Typography
-            color="text.disabled"
-            style={{ marginTop: -24, fontSize: 14 }}
+            color="text.secondary"
+            style={{ marginTop: -36, fontSize: 14 }}
             variant="body2"
           >
-            Thanks for submitting your RSVP!
+            {completed ? "Thanks for submitting your RSVP!" : "Before May 11 please!"}
           </Typography>
-        )}
       </div>
 
       <div id="schedule" style={{ textAlign: "center", paddingTop: 75 }}>
@@ -280,137 +280,75 @@ const Home = ({}) => {
             },
           }}
         >
-          <div style={{position: "relative", maxWidth: "100%"}}>
+          <div style={{ position: "relative", maxWidth: "100%" }}>
             <Paper
-            style={{
-              padding: 20,
-              width: 700,
-              maxWidth: "100%",
-              maxHeight: "100vh",
-              overflowY: "auto",
-            }}
-          >
-            <IconButton style={{position: "absolute", top: 5, right: 5}} onClick={() => setRsvpOpen(false)}>
-              <CloseIcon color="primary" />
-            </IconButton>
-            <StyledForm onSubmit={handleSubmit}>
-              <FormControl sx={{ width: "100%", gap: 5 }} disabled={loading}>
-                <FormGroup>
-                  <FormLabel>Can you make it?</FormLabel>
-                  <div
-                    style={{
-                      display: "flex",
-                      gap: 20,
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    <Button
-                      variant={attending ? "contained" : "outlined"}
-                      color="primary"
-                      onClick={() => setAttending(true)}
+              style={{
+                padding: 48,
+                width: 700,
+                maxWidth: "100%",
+                maxHeight: "100vh",
+                overflowY: "auto",
+              }}
+            >
+              <IconButton
+                style={{ position: "absolute", top: 5, right: 5 }}
+                onClick={() => setRsvpOpen(false)}
+              >
+                <CloseIcon color="primary" />
+              </IconButton>
+              <StyledForm onSubmit={handleSubmit}>
+                <FormControl sx={{ width: "100%", gap: 5 }} disabled={loading}>
+                  <FormGroup>
+                    <FormLabel style={{ marginBottom: 12 }}>
+                      Can you make it?
+                    </FormLabel>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: 20,
+                        justifyContent: "flex-start",
+                      }}
                     >
-                      Yes
-                    </Button>
+                      <Button
+                        variant={attending ? "contained" : "outlined"}
+                        color="primary"
+                        disableElevation={true}
+                        onClick={() => setAttending(true)}
+                      >
+                        Yes
+                      </Button>
 
-                    <Button
-                      variant={!attending ? "contained" : "outlined"}
-                      color="primary"
-                      onClick={() => setAttending(false)}
-                    >
-                      No
-                    </Button>
-                  </div>
-                </FormGroup>
+                      <Button
+                        variant={!attending ? "contained" : "outlined"}
+                        color="primary"
+                        disableElevation={true}
+                        onClick={() => setAttending(false)}
+                      >
+                        No
+                      </Button>
+                    </div>
+                  </FormGroup>
 
-                <FormGroup>
-                  <FormLabel>Who's coming?</FormLabel>
-                  <div>
-                    <Select
-                      value={bringingGuest ? "true" : "false"}
-                      onChange={(e) =>
-                        setBringingGuest(e.target.value === "true")
-                      }
-                      size="small"
-                    >
-                      <MenuItem value={"false"}>Just me</MenuItem>
-                      <MenuItem value={"true"}>Me and my +1</MenuItem>
-                    </Select>
-                  </div>
-                </FormGroup>
-                <GuestsContainer>
-                  <GuestGroup>
-                    <FormLabel>Your info</FormLabel>
-                    <TextField
-                      type="text"
-                      size="small"
-                      variant="standard"
-                      color="primary"
-                      label={t("pages.rsvp.firstName")}
-                      onChange={(e) =>
-                        setPrimaryGuest({
-                          ...primaryGuest,
-                          firstName: e.target.value,
-                        })
-                      }
-                      value={primaryGuest.firstName}
-                      fullWidth
-                      required
-                    />
-
-                    <TextField
-                      type="text"
-                      size="small"
-                      variant="standard"
-                      color="primary"
-                      label={t("pages.rsvp.lastName")}
-                      onChange={(e) =>
-                        setPrimaryGuest({
-                          ...primaryGuest,
-                          lastName: e.target.value,
-                        })
-                      }
-                      value={primaryGuest.lastName}
-                      fullWidth
-                      required
-                    />
-
-                    <TextField
-                      type="text"
-                      size="small"
-                      variant="standard"
-                      color="primary"
-                      label={t("pages.rsvp.dietaryRestrictions")}
-                      onChange={(e) =>
-                        setPrimaryGuest({
-                          ...primaryGuest,
-                          dietaryRestrictions: e.target.value,
-                        })
-                      }
-                      value={primaryGuest.dietaryRestrictions}
-                      fullWidth
-                    />
-
-                    <TextField
-                      type="text"
-                      size="small"
-                      variant="standard"
-                      color="primary"
-                      label="Other notes"
-                      onChange={(e) =>
-                        setPrimaryGuest({
-                          ...primaryGuest,
-                          notes: e.target.value,
-                        })
-                      }
-                      value={primaryGuest.notes}
-                      fullWidth
-                    />
-                  </GuestGroup>
-
-                  {bringingGuest && (
+                  <FormGroup>
+                    <FormLabel style={{ marginBottom: 12 }}>
+                      Who's coming?
+                    </FormLabel>
+                    <div>
+                      <Select
+                        value={bringingGuest ? "true" : "false"}
+                        onChange={(e) =>
+                          setBringingGuest(e.target.value === "true")
+                        }
+                        size="small"
+                      >
+                        <MenuItem value={"false"}>Just me</MenuItem>
+                        <MenuItem value={"true"}>Me and my +1</MenuItem>
+                      </Select>
+                    </div>
+                  </FormGroup>
+                  <GuestsContainer>
                     <GuestGroup>
-                      <FormLabel>Guest Info</FormLabel>
-
+                      <FormLabel>Your info</FormLabel>
                       <TextField
                         type="text"
                         size="small"
@@ -418,12 +356,12 @@ const Home = ({}) => {
                         color="primary"
                         label={t("pages.rsvp.firstName")}
                         onChange={(e) =>
-                          setSecondaryGuest({
-                            ...secondaryGuest,
+                          setPrimaryGuest({
+                            ...primaryGuest,
                             firstName: e.target.value,
                           })
                         }
-                        value={secondaryGuest.firstName}
+                        value={primaryGuest.firstName}
                         fullWidth
                         required
                       />
@@ -435,12 +373,12 @@ const Home = ({}) => {
                         color="primary"
                         label={t("pages.rsvp.lastName")}
                         onChange={(e) =>
-                          setSecondaryGuest({
-                            ...secondaryGuest,
+                          setPrimaryGuest({
+                            ...primaryGuest,
                             lastName: e.target.value,
                           })
                         }
-                        value={secondaryGuest.lastName}
+                        value={primaryGuest.lastName}
                         fullWidth
                         required
                       />
@@ -452,12 +390,28 @@ const Home = ({}) => {
                         color="primary"
                         label={t("pages.rsvp.dietaryRestrictions")}
                         onChange={(e) =>
-                          setSecondaryGuest({
-                            ...secondaryGuest,
+                          setPrimaryGuest({
+                            ...primaryGuest,
                             dietaryRestrictions: e.target.value,
                           })
                         }
-                        value={secondaryGuest.dietaryRestrictions}
+                        value={primaryGuest.dietaryRestrictions}
+                        fullWidth
+                      />
+
+                      <TextField
+                        type="text"
+                        size="small"
+                        variant="standard"
+                        color="primary"
+                        label="Song Request"
+                        onChange={(e) =>
+                          setPrimaryGuest({
+                            ...primaryGuest,
+                            songRequest: e.target.value,
+                          })
+                        }
+                        value={primaryGuest.songRequest}
                         fullWidth
                       />
 
@@ -477,33 +431,120 @@ const Home = ({}) => {
                         fullWidth
                       />
                     </GuestGroup>
-                  )}
-                </GuestsContainer>
 
-                <div
-                  style={{
-                    display: "flex",
-                    // justifyContent: "flex-end",
-                    alignItems: "center",
-                    gap: 20,
-                    position: "sticky",
-                    bottom: 0,
-                  }}
-                >
-                  <Button
-                    disabled={loading}
-                    sx={{ width: 150, backgroundColor: "#fbc7bd" }}
-                    variant="outlined"
-                    color="primary"
-                    type="submit"
+                    {bringingGuest && (
+                      <GuestGroup>
+                        <FormLabel>Guest Info</FormLabel>
+
+                        <TextField
+                          type="text"
+                          size="small"
+                          variant="standard"
+                          color="primary"
+                          label={t("pages.rsvp.firstName")}
+                          onChange={(e) =>
+                            setSecondaryGuest({
+                              ...secondaryGuest,
+                              firstName: e.target.value,
+                            })
+                          }
+                          value={secondaryGuest.firstName}
+                          fullWidth
+                          required
+                        />
+
+                        <TextField
+                          type="text"
+                          size="small"
+                          variant="standard"
+                          color="primary"
+                          label={t("pages.rsvp.lastName")}
+                          onChange={(e) =>
+                            setSecondaryGuest({
+                              ...secondaryGuest,
+                              lastName: e.target.value,
+                            })
+                          }
+                          value={secondaryGuest.lastName}
+                          fullWidth
+                          required
+                        />
+
+                        <TextField
+                          type="text"
+                          size="small"
+                          variant="standard"
+                          color="primary"
+                          label={t("pages.rsvp.dietaryRestrictions")}
+                          onChange={(e) =>
+                            setSecondaryGuest({
+                              ...secondaryGuest,
+                              dietaryRestrictions: e.target.value,
+                            })
+                          }
+                          value={secondaryGuest.dietaryRestrictions}
+                          fullWidth
+                        />
+
+                        <TextField
+                          type="text"
+                          size="small"
+                          variant="standard"
+                          color="primary"
+                          label="Song Request"
+                          onChange={(e) =>
+                            setSecondaryGuest({
+                              ...secondaryGuest,
+                              songRequest: e.target.value,
+                            })
+                          }
+                          value={secondaryGuest.songRequest}
+                          fullWidth
+                        />
+
+                        <TextField
+                          type="text"
+                          size="small"
+                          variant="standard"
+                          color="primary"
+                          label="Other notes"
+                          onChange={(e) =>
+                            setSecondaryGuest({
+                              ...secondaryGuest,
+                              notes: e.target.value,
+                            })
+                          }
+                          value={secondaryGuest.notes}
+                          fullWidth
+                        />
+                      </GuestGroup>
+                    )}
+                  </GuestsContainer>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      // justifyContent: "flex-end",
+                      alignItems: "center",
+                      gap: 20,
+                      position: "sticky",
+                      bottom: 0,
+                    }}
                   >
-                    {t("pages.rsvp.submit")}
-                  </Button>
-                  {loading && <CircularProgress size={20} />}
-                </div>
-              </FormControl>
-            </StyledForm>
-          </Paper>
+                    <Button
+                      disabled={loading}
+                      sx={{ width: 150, backgroundColor: "#fbc7bd" }}
+                      variant="outlined"
+                      color="primary"
+                      type="submit"
+                    >
+                      {t("pages.rsvp.submit")}
+                    </Button>
+                    {loading && <CircularProgress size={20} />}
+                  </div>
+                </FormControl>
+              </StyledForm>
+            </Paper>
           </div>
         </ThemeProvider>
       </Modal>

@@ -252,7 +252,6 @@ export const GuestsContainer = styled("div")(({ theme }) => ({
   display: "flex",
   flexWrap: "wrap",
   gap: 50,
-  marginBottom: 40,
   width: "100%",
 
   [theme.breakpoints.down("md")]: {
