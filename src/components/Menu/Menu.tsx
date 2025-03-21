@@ -163,7 +163,7 @@ const Menu = ({}) => {
 
   return (
     <MenuContainer open={open}>
-      <HeartImg />
+      <HeartImg onClick={() => window.scrollTo(0, 0)} />
       <Hamburger color="inherit" onClick={() => setOpen(!open)}>
         <Buns>
           <Patty open={open} />
