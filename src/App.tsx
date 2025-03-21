@@ -27,6 +27,7 @@ export const theme = createTheme({
       paper: "#fbc7bd",
     },
     primary: { main: "#ff2103" },
+    action: { disabled: "#FF675F", disabledBackground: "#FF675F" },
     text: {
       primary: "#ff2103",
       secondary: "#FF503E",
