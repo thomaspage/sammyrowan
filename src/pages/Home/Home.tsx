@@ -118,20 +118,19 @@ const Home = ({}) => {
     <HomeContainer>
       <LoversImg />
 
-      <TitleImg />
-
+      <TitleImg style={{ marginBottom: 150 }} />
+{/* 
       <Typography style={{ marginBottom: 24 }} variant="body2">
         Scroll to RSVP!
       </Typography>
 
-      <ArrowImg />
+      <ArrowImg /> */}
 
       <div id="details" style={{ textAlign: "center" }}>
         <FarmImg style={{ marginBottom: 24 }} />
 
-        <Typography variant="body2" style={{ marginBottom: 24 }}>
+        <Typography variant="body2" style={{ marginBottom: 12 }}>
           Our wedding will be held at
-          <br />
           Grammy + Grampy's Farm
         </Typography>
 
@@ -142,7 +141,6 @@ const Home = ({}) => {
         >
           <Typography variant="body1">
             2037 RUE Duvernay,
-            <br />
             Sherbrooke QC J1H 0A6
           </Typography>
         </a>
@@ -150,9 +148,8 @@ const Home = ({}) => {
         <DividerImg />
 
         <Typography variant="body1" style={{ marginBottom: 24 }}>
-          September 06, 2025
-          <br />
-          at 4:30 pm
+          September 06, 2025 
+          <span style={{ color: "#FF503E"}}> at 4:30 pm</span>
         </Typography>
       </div>
 
@@ -173,7 +170,7 @@ const Home = ({}) => {
         </RsvpButton>
           <Typography
             color="text.secondary"
-            style={{ marginTop: -36, fontSize: 14 }}
+            style={{ marginTop: -24, fontSize: 14 }}
             variant="body2"
           >
             {completed ? "Thanks for submitting your RSVP!" : "Before May 11 please!"}

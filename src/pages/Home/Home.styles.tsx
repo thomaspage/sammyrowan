@@ -113,7 +113,7 @@ export const LoversImg = styled("img").attrs({
 export const FarmImg = styled("img").attrs({
   src: `${process.env.PUBLIC_URL}/img/farm.png`,
 })(({theme}) => ({
-  width: 400,
+  width: 350,
   maxWidth: "100%",
   margin: "auto",
   // marginBottom: -120,
@@ -126,7 +126,7 @@ export const FarmImg = styled("img").attrs({
   },
 
   [theme.breakpoints.down("sm")]: {
-    width: 300,
+    width: 250,
     // marginBottom: -60,
   },
 
@@ -192,13 +192,16 @@ export const RsvpButton = styled(Button)(({ theme }) => ({
 export const ScheduleImg = styled("img").attrs({
   src: `${process.env.PUBLIC_URL}/img/schedule.png`,
 })(({theme}) => ({
-  width: 400,
+  width: 450,
   maxWidth: "100%",
 
   [theme.breakpoints.down("md")]: {
-    width: 350,
+    width: 400,
   },
 
+  [theme.breakpoints.down("sm")]: {
+    width: 350,
+  },
 
 }));
 
