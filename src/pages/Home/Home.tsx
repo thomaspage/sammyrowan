@@ -6,9 +6,15 @@ import {
   FormControl,
   FormControlLabel,
   FormGroup,
+  FormLabel,
+  IconButton,
+  Input,
+  InputLabel,
+  MenuItem,
   Modal,
   Paper,
   Radio,
+  Select,
   TextField,
   ThemeProvider,
   Typography,
@@ -32,20 +38,24 @@ import {
   GuestGroup,
   GuestsContainer,
   StyledRadioGroup,
+  StyledForm,
 } from "./Home.styles";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { GOOGLE_SCRIPT_URL, theme } from "../../App";
+import CloseIcon from "@mui/icons-material/Close";
 interface Guest {
   firstName: string;
   lastName: string;
   dietaryRestrictions: string;
+  notes: string;
 }
 
 const emptyGuest: Guest = {
   firstName: "",
   lastName: "",
   dietaryRestrictions: "",
+  notes: "",
 };
 const Home = ({}) => {
   const { t } = useTranslation();
@@ -54,7 +64,7 @@ const Home = ({}) => {
 
   const [completed, setCompleted] = useState<boolean>(!!rsvpMessage);
   const [loading, setLoading] = useState<boolean>(false);
-  const [bringingGuest, setBringingGuest] = useState<boolean>(true);
+  const [bringingGuest, setBringingGuest] = useState<boolean>(false);
   const [primaryGuest, setPrimaryGuest] = useState<Guest>(emptyGuest);
   const [secondaryGuest, setSecondaryGuest] = useState<Guest>(emptyGuest);
   const [attending, setAttending] = useState<boolean>(true);
@@ -144,11 +154,30 @@ const Home = ({}) => {
         </Typography>
       </div>
 
-      <div id="rsvp" style={{ display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <RsvpButton variant="outlined" onClick={() => setRsvpOpen(true)} disabled={completed}>
+      <div
+        id="rsvp"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <RsvpButton
+          variant="outlined"
+          onClick={() => setRsvpOpen(true)}
+          disabled={completed}
+        >
           <Typography style={{ fontSize: 40 }}>RSVP</Typography>
         </RsvpButton>
-        {completed && <Typography color="text.disabled" style={{ marginTop: -24, fontSize: 14 }} variant="body2">Thanks for submitting your RSVP!</Typography>}
+        {completed && (
+          <Typography
+            color="text.disabled"
+            style={{ marginTop: -24, fontSize: 14 }}
+            variant="body2"
+          >
+            Thanks for submitting your RSVP!
+          </Typography>
+        )}
       </div>
 
       <div id="schedule" style={{ textAlign: "center", paddingTop: 75 }}>
@@ -251,18 +280,69 @@ const Home = ({}) => {
             },
           }}
         >
-          <Paper style={{ padding: 20, width: 700, maxWidth: "100%", maxHeight: "100vh", overflowY: "auto" }}>
-            <form onSubmit={handleSubmit}>
-              <FormControl sx={{ width: "100%" }} disabled={loading}>
+          <div style={{position: "relative", maxWidth: "100%"}}>
+            <Paper
+            style={{
+              padding: 20,
+              width: 700,
+              maxWidth: "100%",
+              maxHeight: "100vh",
+              overflowY: "auto",
+            }}
+          >
+            <IconButton style={{position: "absolute", top: 5, right: 5}} onClick={() => setRsvpOpen(false)}>
+              <CloseIcon color="primary" />
+            </IconButton>
+            <StyledForm onSubmit={handleSubmit}>
+              <FormControl sx={{ width: "100%", gap: 5 }} disabled={loading}>
+                <FormGroup>
+                  <FormLabel>Can you make it?</FormLabel>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 20,
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <Button
+                      variant={attending ? "contained" : "outlined"}
+                      color="primary"
+                      onClick={() => setAttending(true)}
+                    >
+                      Yes
+                    </Button>
+
+                    <Button
+                      variant={!attending ? "contained" : "outlined"}
+                      color="primary"
+                      onClick={() => setAttending(false)}
+                    >
+                      No
+                    </Button>
+                  </div>
+                </FormGroup>
+
+                <FormGroup>
+                  <FormLabel>Who's coming?</FormLabel>
+                  <div>
+                    <Select
+                      value={bringingGuest ? "true" : "false"}
+                      onChange={(e) =>
+                        setBringingGuest(e.target.value === "true")
+                      }
+                      size="small"
+                    >
+                      <MenuItem value={"false"}>Just me</MenuItem>
+                      <MenuItem value={"true"}>Me and my +1</MenuItem>
+                    </Select>
+                  </div>
+                </FormGroup>
                 <GuestsContainer>
                   <GuestGroup>
-                    <Typography fontWeight={500}>
-                      {bringingGuest
-                        ? t("pages.rsvp.guest1")
-                        : t("pages.rsvp.guest")}
-                    </Typography>
+                    <FormLabel>Your info</FormLabel>
                     <TextField
                       type="text"
+                      size="small"
                       variant="standard"
                       color="primary"
                       label={t("pages.rsvp.firstName")}
@@ -279,6 +359,7 @@ const Home = ({}) => {
 
                     <TextField
                       type="text"
+                      size="small"
                       variant="standard"
                       color="primary"
                       label={t("pages.rsvp.lastName")}
@@ -295,6 +376,7 @@ const Home = ({}) => {
 
                     <TextField
                       type="text"
+                      size="small"
                       variant="standard"
                       color="primary"
                       label={t("pages.rsvp.dietaryRestrictions")}
@@ -307,16 +389,31 @@ const Home = ({}) => {
                       value={primaryGuest.dietaryRestrictions}
                       fullWidth
                     />
+
+                    <TextField
+                      type="text"
+                      size="small"
+                      variant="standard"
+                      color="primary"
+                      label="Other notes"
+                      onChange={(e) =>
+                        setPrimaryGuest({
+                          ...primaryGuest,
+                          notes: e.target.value,
+                        })
+                      }
+                      value={primaryGuest.notes}
+                      fullWidth
+                    />
                   </GuestGroup>
 
                   {bringingGuest && (
                     <GuestGroup>
-                      <Typography fontWeight={500}>
-                        {t("pages.rsvp.guest2")}
-                      </Typography>
+                      <FormLabel>Guest Info</FormLabel>
 
                       <TextField
                         type="text"
+                        size="small"
                         variant="standard"
                         color="primary"
                         label={t("pages.rsvp.firstName")}
@@ -333,6 +430,7 @@ const Home = ({}) => {
 
                       <TextField
                         type="text"
+                        size="small"
                         variant="standard"
                         color="primary"
                         label={t("pages.rsvp.lastName")}
@@ -349,6 +447,7 @@ const Home = ({}) => {
 
                       <TextField
                         type="text"
+                        size="small"
                         variant="standard"
                         color="primary"
                         label={t("pages.rsvp.dietaryRestrictions")}
@@ -361,75 +460,51 @@ const Home = ({}) => {
                         value={secondaryGuest.dietaryRestrictions}
                         fullWidth
                       />
+
+                      <TextField
+                        type="text"
+                        size="small"
+                        variant="standard"
+                        color="primary"
+                        label="Other notes"
+                        onChange={(e) =>
+                          setPrimaryGuest({
+                            ...primaryGuest,
+                            notes: e.target.value,
+                          })
+                        }
+                        value={primaryGuest.notes}
+                        fullWidth
+                      />
                     </GuestGroup>
                   )}
                 </GuestsContainer>
 
-                <FormGroup
-                  sx={{
-                    marginBottom: 2,
-                  }}
-                >
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={!bringingGuest}
-                        onChange={() => {
-                          setBringingGuest(!bringingGuest);
-                          setSecondaryGuest(emptyGuest);
-                        }}
-                      />
-                    }
-                    label={t("pages.rsvp.justMe")}
-                  />
-                </FormGroup>
-
-                <StyledRadioGroup
-                  value={attending}
-                  onChange={(e) => setAttending(e.target.value === "true")}
-                >
-                  <FormControlLabel
-                    value={true}
-                    control={<Radio />}
-                    label={
-                      bringingGuest
-                        ? t("pages.rsvp.wellBeThere")
-                        : t("pages.rsvp.illBeThere")
-                    }
-                    sx={{ flexBasis: 20, flexGrow: 1 }}
-                  />
-                  <div style={{ flexBasis: 20, flexGrow: 2 }}>
-                    <FormControlLabel
-                      value={false}
-                      control={<Radio />}
-                      label={t("pages.rsvp.notAttending")}
-                    />
-                    {!attending && <span>😭</span>}
-                  </div>
-                </StyledRadioGroup>
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: "flex-end",
+                    // justifyContent: "flex-end",
                     alignItems: "center",
                     gap: 20,
+                    position: "sticky",
+                    bottom: 0,
                   }}
                 >
-                  {loading && <CircularProgress size={20} />}
-
                   <Button
                     disabled={loading}
-                    sx={{ width: 150 }}
+                    sx={{ width: 150, backgroundColor: "#fbc7bd" }}
                     variant="outlined"
                     color="primary"
                     type="submit"
                   >
                     {t("pages.rsvp.submit")}
                   </Button>
+                  {loading && <CircularProgress size={20} />}
                 </div>
               </FormControl>
-            </form>
+            </StyledForm>
           </Paper>
+          </div>
         </ThemeProvider>
       </Modal>
     </HomeContainer>

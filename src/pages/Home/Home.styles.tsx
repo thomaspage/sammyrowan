@@ -1,4 +1,4 @@
-import { Button, RadioGroup, Typography } from "@mui/material";
+import { Button, FormGroup, RadioGroup, Typography } from "@mui/material";
 import { styled } from "styled-components";
 
 export const HomeContainer = styled("div")(({ theme }) => ({
@@ -260,7 +260,7 @@ export const GuestsContainer = styled("div")(({ theme }) => ({
   },
 }));
 
-export const GuestGroup = styled("div")({
+export const GuestGroup = styled(FormGroup)({
   flexGrow: 1,
   gap: 13,
   display: "inline-flex",
@@ -327,3 +327,30 @@ export const MoreDetails = styled(Typography)`
     }
   }  
 `
+
+
+export const StyledForm = styled('form')({
+
+  ".MuiFormLabel-colorPrimary": {
+    color: "#ff2103"
+  },
+
+  ".MuiInputBase-root": {
+    "&::before": {
+      borderColor: "#FAA29D",
+    },
+
+    
+  },
+
+  "fieldset": {
+      borderColor: "#FAA29D",
+    
+  },
+
+  ".MuiTextField-root": {
+    ".MuiInputLabel-standard:not(.Mui-focused)": {
+      color: "#FF675F"
+    }
+  }
+});
