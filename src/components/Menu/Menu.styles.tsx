@@ -13,7 +13,6 @@ export const MenuContainer = styled("div")<{ open: boolean }>(
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0,
 
     [theme.breakpoints.down("md")]: {
       pointerEvents: "none",
@@ -41,6 +40,7 @@ export const List = styled("div")<{ open: boolean }>(({ theme, open }) => ({
     left: 0,
     right: 0,
     opacity: 0,
+    position: "fixed",
     pointerEvents: "none",
     paddingLeft: 50,
     backgroundColor: "#fbc7bd",
