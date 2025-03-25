@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/static/css/main.e279d6cf.css",
-    "main.js": "/static/js/main.f512fbcb.js",
+    "main.js": "/static/js/main.c1afe8d1.js",
     "static/media/Lazydog.otf": "/static/media/Lazydog.e689a90f7005cc7a6ebf.otf",
     "static/media/ballantines.woff": "/static/media/ballantines.01bc5e8f03195996622c.woff",
     "index.html": "/index.html",
     "main.e279d6cf.css.map": "/static/css/main.e279d6cf.css.map",
-    "main.f512fbcb.js.map": "/static/js/main.f512fbcb.js.map"
+    "main.c1afe8d1.js.map": "/static/js/main.c1afe8d1.js.map"
   },
   "entrypoints": [
     "static/css/main.e279d6cf.css",
-    "static/js/main.f512fbcb.js"
+    "static/js/main.c1afe8d1.js"
   ]
 }
