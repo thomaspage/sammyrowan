@@ -356,3 +356,66 @@ export const StyledForm = styled('form')({
     }
   }
 });
+
+
+export const GeeseImg = styled("img").attrs({
+  src: `${process.env.PUBLIC_URL}/img/geese.png`,
+})(({theme}) => ({
+  width: 550,
+  maxWidth: "100%",
+  padding: 50,
+
+  // [theme.breakpoints.down("md")]: {
+  //   width: 325,
+  //   marginBottom: -30,
+  // },
+
+  // [theme.breakpoints.down("sm")]: {
+  //   width: 250,
+  //   marginBottom: -20,
+  // },
+
+}));
+
+export const RsvpYesImg = styled("img").attrs({
+  src: `${process.env.PUBLIC_URL}/img/rsvp-yes.png`,
+})(({theme}) => ({
+  height: 75,
+  objectFit: "contain",
+  maxWidth: "100%",
+  padding: "0 50px",
+  // padding: 100,
+
+
+  // [theme.breakpoints.down("md")]: {
+  //   width: 325,
+  //   marginBottom: -30,
+  // },
+
+  // [theme.breakpoints.down("sm")]: {
+  //   width: 250,
+  //   marginBottom: -20,
+  // },
+
+}));
+
+export const RsvpNoImg = styled("img").attrs({
+  src: `${process.env.PUBLIC_URL}/img/rsvp-no.png`,
+})(({theme}) => ({
+  height: 75,
+  objectFit: "contain",
+  maxWidth: "100%",
+  padding: "0 50px",
+
+
+  // [theme.breakpoints.down("md")]: {
+  //   width: 325,
+  //   marginBottom: -30,
+  // },
+
+  // [theme.breakpoints.down("sm")]: {
+  //   width: 250,
+  //   marginBottom: -20,
+  // },
+
+}));

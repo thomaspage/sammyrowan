@@ -200,6 +200,7 @@ export const HeartImg = styled2("img").attrs({
   left: 20, 
   zIndex: 1,
   width: 50,
+  cursor: "pointer",
 
   [theme.breakpoints.down("md")]: {
     display: "none",

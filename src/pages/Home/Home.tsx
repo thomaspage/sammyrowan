@@ -39,11 +39,15 @@ import {
   GuestsContainer,
   StyledRadioGroup,
   StyledForm,
+  GeeseImg,
+  RsvpNoImg,
+  RsvpYesImg,
 } from "./Home.styles";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { GOOGLE_SCRIPT_URL, theme } from "../../App";
 import CloseIcon from "@mui/icons-material/Close";
+import { HeartImg } from "../../components/Menu/Menu.styles";
 interface Guest {
   firstName: string;
   lastName: string;
@@ -68,6 +72,7 @@ const Home = ({}) => {
   const [attending, setAttending] = useState<boolean>(true);
   const [songRequest, setSongRequest] = useState<string>("");
   const [notes, setNotes] = useState<string>("");
+  const [showGeese, setShowGeese] = useState<boolean | undefined>(undefined);
 
   // Check query params for allowMultipleGuests
   const urlParams = new URLSearchParams(window.location.search);
@@ -85,6 +90,7 @@ const Home = ({}) => {
     localStorage.setItem("rsvpMessage", rsvpMessage);
     setCompleted(true);
     setRsvpOpen(false);
+    setShowGeese(attending)
   };
 
   const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
@@ -122,6 +128,17 @@ const Home = ({}) => {
         alert("There was an error submitting your RSVP. Please try again.");
       });
   };
+
+  if (showGeese !== undefined) {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "fixed", top: 0, left: 0, right: 0, bottom: 0, backgroundColor: "#fbc7bd" , zIndex: 1}}>
+        <HeartImg onClick={() => setShowGeese(undefined)} style={{display: "block"}} />
+        <GeeseImg />
+        {showGeese ? <RsvpYesImg /> : <RsvpNoImg />}
+      </div>
+    )
+  }
+
 
   return (
     <HomeContainer>
