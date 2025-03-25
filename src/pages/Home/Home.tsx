@@ -48,16 +48,12 @@ interface Guest {
   firstName: string;
   lastName: string;
   dietaryRestrictions: string;
-  songRequest: string;
-  notes: string;
 }
 
 const emptyGuest: Guest = {
   firstName: "",
   lastName: "",
   dietaryRestrictions: "",
-  songRequest: "",
-  notes: "",
 };
 const Home = ({}) => {
   const { t } = useTranslation();
@@ -70,6 +66,17 @@ const Home = ({}) => {
   const [primaryGuest, setPrimaryGuest] = useState<Guest>(emptyGuest);
   const [secondaryGuest, setSecondaryGuest] = useState<Guest>(emptyGuest);
   const [attending, setAttending] = useState<boolean>(true);
+  const [songRequest, setSongRequest] = useState<string>("");
+  const [notes, setNotes] = useState<string>("");
+
+  // Check query params for allowMultipleGuests
+  const urlParams = new URLSearchParams(window.location.search);
+  const g = urlParams.get("g") || window.localStorage.getItem("g");
+  const allowMultipleGuests = g !== "1";
+
+  useEffect(() => {
+    g && window.localStorage.setItem("g", g);
+  }, [g]);
 
   const handleFormCompletion = () => {
     const rsvpMessage = attending
@@ -92,6 +99,8 @@ const Home = ({}) => {
       secondaryGuest,
       attending,
       bringingGuest: bringingGuest && attending,
+      songRequest,
+      notes,
     };
 
     fetch(GOOGLE_SCRIPT_URL, {
@@ -119,7 +128,7 @@ const Home = ({}) => {
       <LoversImg />
 
       <TitleImg style={{ marginBottom: 150 }} />
-{/* 
+      {/* 
       <Typography style={{ marginBottom: 24 }} variant="body2">
         Scroll to RSVP!
       </Typography>
@@ -130,8 +139,7 @@ const Home = ({}) => {
         <FarmImg style={{ marginBottom: 24 }} />
 
         <Typography variant="body2" style={{ marginBottom: 12 }}>
-          Our wedding will be held at
-          Grammy + Grampy's Farm
+          Our wedding will be held at Grammy + Grampy's Farm
         </Typography>
 
         <a
@@ -140,16 +148,15 @@ const Home = ({}) => {
           style={{ color: "inherit" }}
         >
           <Typography variant="body1">
-            2037 RUE Duvernay,
-            Sherbrooke QC J1H 0A6
+            2037 RUE Duvernay, Sherbrooke QC J1H 0A6
           </Typography>
         </a>
 
         <DividerImg />
 
         <Typography variant="body1" style={{ marginBottom: 24 }}>
-          September 06, 2025 
-          <span style={{ color: "#FF503E"}}> at 4:30 pm</span>
+          September 06, 2025
+          <span style={{ color: "#FF503E" }}> at 4:30 pm</span>
         </Typography>
       </div>
 
@@ -168,13 +175,15 @@ const Home = ({}) => {
         >
           <Typography style={{ fontSize: 40 }}>RSVP</Typography>
         </RsvpButton>
-          <Typography
-            color="text.secondary"
-            style={{ marginTop: -24, fontSize: 14 }}
-            variant="body2"
-          >
-            {completed ? "Thanks for submitting your RSVP!" : "Before May 11 please!"}
-          </Typography>
+        <Typography
+          color="text.secondary"
+          style={{ marginTop: -24, fontSize: 14 }}
+          variant="body2"
+        >
+          {completed
+            ? "Thanks for submitting your RSVP!"
+            : "Before May 11 please!"}
+        </Typography>
       </div>
 
       <div id="schedule" style={{ textAlign: "center", paddingTop: 75 }}>
@@ -326,23 +335,26 @@ const Home = ({}) => {
                     </div>
                   </FormGroup>
 
-                  <FormGroup>
-                    <FormLabel style={{ marginBottom: 12 }}>
-                      Who's coming?
-                    </FormLabel>
-                    <div>
-                      <Select
-                        value={bringingGuest ? "true" : "false"}
-                        onChange={(e) =>
-                          setBringingGuest(e.target.value === "true")
-                        }
-                        size="small"
-                      >
-                        <MenuItem value={"false"}>Just me</MenuItem>
-                        <MenuItem value={"true"}>Me and my +1</MenuItem>
-                      </Select>
-                    </div>
-                  </FormGroup>
+                  {allowMultipleGuests && (
+                    <FormGroup>
+                      <FormLabel style={{ marginBottom: 12 }}>
+                        Who's coming?
+                      </FormLabel>
+                      <div>
+                        <Select
+                          value={bringingGuest ? "true" : "false"}
+                          onChange={(e) =>
+                            setBringingGuest(e.target.value === "true")
+                          }
+                          size="small"
+                        >
+                          <MenuItem value={"false"}>Just me</MenuItem>
+                          <MenuItem value={"true"}>Me and my +1</MenuItem>
+                        </Select>
+                      </div>
+                    </FormGroup>
+                  )}
+
                   <GuestsContainer>
                     <GuestGroup>
                       <FormLabel>Your info</FormLabel>
@@ -393,38 +405,6 @@ const Home = ({}) => {
                           })
                         }
                         value={primaryGuest.dietaryRestrictions}
-                        fullWidth
-                      />
-
-                      <TextField
-                        type="text"
-                        size="small"
-                        variant="standard"
-                        color="primary"
-                        label="Song Request"
-                        onChange={(e) =>
-                          setPrimaryGuest({
-                            ...primaryGuest,
-                            songRequest: e.target.value,
-                          })
-                        }
-                        value={primaryGuest.songRequest}
-                        fullWidth
-                      />
-
-                      <TextField
-                        type="text"
-                        size="small"
-                        variant="standard"
-                        color="primary"
-                        label="Other notes"
-                        onChange={(e) =>
-                          setPrimaryGuest({
-                            ...primaryGuest,
-                            notes: e.target.value,
-                          })
-                        }
-                        value={primaryGuest.notes}
                         fullWidth
                       />
                     </GuestGroup>
@@ -482,41 +462,31 @@ const Home = ({}) => {
                           value={secondaryGuest.dietaryRestrictions}
                           fullWidth
                         />
-
-                        <TextField
-                          type="text"
-                          size="small"
-                          variant="standard"
-                          color="primary"
-                          label="Song Request"
-                          onChange={(e) =>
-                            setSecondaryGuest({
-                              ...secondaryGuest,
-                              songRequest: e.target.value,
-                            })
-                          }
-                          value={secondaryGuest.songRequest}
-                          fullWidth
-                        />
-
-                        <TextField
-                          type="text"
-                          size="small"
-                          variant="standard"
-                          color="primary"
-                          label="Other notes"
-                          onChange={(e) =>
-                            setSecondaryGuest({
-                              ...secondaryGuest,
-                              notes: e.target.value,
-                            })
-                          }
-                          value={secondaryGuest.notes}
-                          fullWidth
-                        />
                       </GuestGroup>
                     )}
                   </GuestsContainer>
+
+                  <TextField
+                    type="text"
+                    size="small"
+                    variant="standard"
+                    color="primary"
+                    label="Song Request"
+                    onChange={(e) => setSongRequest(e.target.value)}
+                    value={songRequest}
+                    fullWidth
+                  />
+
+                  <TextField
+                    type="text"
+                    size="small"
+                    variant="standard"
+                    color="primary"
+                    label="Other notes"
+                    onChange={(e) => setNotes(e.target.value)}
+                    value={notes}
+                    fullWidth
+                  />
 
                   <div
                     style={{
