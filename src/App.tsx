@@ -18,7 +18,7 @@ import SecretDinner from "./pages/SecretDinner";
 import CssBaseline from '@mui/material/CssBaseline';
 
 export const GOOGLE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzsnS4CQX4YhZyhU-jfZ_6Qr6uKd5nmUq6FPyIBd7oJXXfFGE2EDFfYJCAQJBxQ7c5Xpg/exec";
+  "https://script.google.com/macros/s/AKfycbwCDNI8K6yANsQggapjqcbZVHpk7xgOgm8uEdlYjnG6rFzoVd88A5TCioKL1beWWEoigw/exec";
 
 export const theme = createTheme({
   palette: {
